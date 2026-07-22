@@ -1,0 +1,68 @@
+menu "KS203 SoftAP Viz Configuration"
+
+    config KS203_UART_NUM
+        int "UART port number for KS203 RS485"
+        range 0 2
+        default 1
+
+    config KS203_UART_TX_GPIO
+        int "UART TX GPIO (to MAX485 DI / module RX)"
+        range 0 54
+        default 27
+
+    config KS203_UART_RX_GPIO
+        int "UART RX GPIO (from MAX485 RO / module TX)"
+        range 0 54
+        default 26
+
+    config KS203_RS485_DE_GPIO
+        int "RS485 DE/RE GPIO (only if KS203_USE_DE)"
+        range 0 54
+        default 25
+
+    config KS203_USE_DE
+        bool "Drive DE/RE GPIO (MAX485 with DE pin)"
+        default n
+        help
+            Leave disabled for auto-direction TTL-RS485 modules (VCC/GND/TX/RX only).
+            Enable only if your transceiver needs DE high=TX / low=RX.
+
+    config KS203_BAUD_RATE
+        int "KS203 UART baud rate"
+        default 115200
+
+    config KS203_ADDR
+        hex "KS203 device address"
+        default 0xEA
+
+    config KS203_POLL_MS
+        int "Ranging poll interval (ms)"
+        range 50 5000
+        default 400
+
+    config KS203_TRY_BCC
+        bool "Also try sending commands with BCC byte"
+        default y
+        help
+            KS203 default is no BCC, but some units enable it. When enabled,
+            the driver tries plain then BCC command.
+
+    config EXAMPLE_WIFI_SSID
+        string "SoftAP SSID"
+        default "KS203-P4"
+
+    config EXAMPLE_WIFI_PASSWORD
+        string "SoftAP password (min 8 chars)"
+        default "12345678"
+
+    config EXAMPLE_WIFI_CHANNEL
+        int "SoftAP channel"
+        range 1 13
+        default 1
+
+    config EXAMPLE_MAX_STA_CONN
+        int "Max SoftAP stations"
+        range 1 8
+        default 4
+
+endmenu
